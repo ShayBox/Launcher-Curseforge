@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"runtime"
 )
 
 // Package - XML structure the CurseForge CCIP files
@@ -27,7 +28,17 @@ func main() {
 	pkg := LoadXML(os.Args[1])
 	url := GetURL(pkg)
 
-	LoadMultiMC(url)
+	var args []string
+	switch runtime.GOOS {
+	case "darwin":
+		args = []string{"open", "-a", "MultiMC", "--args", "import", url}
+	case "freebsd", "linux", "netbsd", "openbsd":
+		args = []string{"multimc", "--import", url}
+	case "windows":
+		args = []string{"MultiMC.exe", "--import", url}
+	}
+
+	LoadMultiMC(args)
 }
 
 // LoadXML - Load XML from disk into variable
@@ -69,8 +80,8 @@ func GetURL(pkg Package) string {
 }
 
 // LoadMultiMC - Execute MultiMC with --import (url)
-func LoadMultiMC(url string) {
-	cmd := exec.Command("multimc", "--import", url)
+func LoadMultiMC(args []string) {
+	cmd := exec.Command(args[0], args[1:]...)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
