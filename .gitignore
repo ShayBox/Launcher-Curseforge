@@ -1,0 +1,5 @@
+*
+!.gitignore
+!main.go
+!README.md
+!example.ccip
