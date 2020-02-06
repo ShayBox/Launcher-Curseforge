@@ -18,5 +18,4 @@ linux:
 
 windows:
 	mkdir -p output
-	GOOS=windows go build -o ./build/windows/MultiMC-Twitch.exe
-	tar -czvf ./output/windows.tar.gz --exclude .gitkeep -C ./build/windows .
+	GOOS=windows go build -o ./output/MultiMC-Twitch.exe
