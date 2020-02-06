@@ -5,20 +5,12 @@ A simple Go program that handles Twitch's custom protocol and ccip files
 2. Requests the [TwitchAPI] to get the zip url  
 3. Launches [MultiMC] with the `--import` flag, with the url  
 
-Examples:
-  - `MultiMC-Twitch example.ccip`
-  - `MultiMC-Twitch twitch://www.curseforge.com/minecraft/modpacks/aesthetic-construction/download-client/2246179`
+Instructions:
+  - macOS - Move `MultiMC-Twitch.app` into `Applications`
+  - Linux - [AUR] or Manually install files into system
+  - Windows - Move `MultiMC-Twitch.exe` into `MultiMC` folder and execute
 
-Includes:
-  - Pre-configured Info.plist for handling Twitch protocol
-  - Pre-configured multimc-twitch.desktop for handling Twitch protocol
-  - Twitch.reg for handling Twitch protocol (Must be configured)
-
-Configure Twitch.reg for Windows:
-1. Edit `Twitch.reg` with any text editor  
-2. Update the two paths to `MultiMC-Twitch.exe`   
-  (Defaults to C:\MultiMC\MultiMC-Twitch.exe)
-3. Run `Twitch.reg`  
+Note: Having the Twitch app installed may break this.
 
 [Download](https://github.com/ShayBox/MultiMC-CCIP/releases)
 
@@ -26,3 +18,4 @@ Configure Twitch.reg for Windows:
 [Twitch]: https://twitch.tv/
 [TwitchAPI]: https://twitchappapi.docs.apiary.io/
 [MultiMC]: https://multimc.org/
+[AUR]: https://aur.archlinux.org/packages/multimc-twitch/
