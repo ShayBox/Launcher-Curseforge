@@ -1,7 +1,7 @@
 # MultiMC-Twitch
 
 A simple Go program that handles Twitch's custom protocol and ccip files
-1. Reads the [CurseForge] `.ccip` file or [Twtch] `twitch://` protocol  
+1. Reads the [CurseForge] `.ccip` file or [Twitch] `twitch://` protocol  
 2. Requests the [TwitchAPI] to get the zip url  
 3. Launches [MultiMC] with the `--import` flag, with the url  
 
