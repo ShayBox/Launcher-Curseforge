@@ -5,12 +5,14 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"os"
 	"os/exec"
 	"runtime"
+	"strings"
 )
 
-// Package - XML structure the CurseForge CCIP files
+// Package - XML structure the Twitch CCIP files
 type Package struct {
 	XMLName xml.Name `xml:"package"`
 	Project struct {
@@ -21,21 +23,29 @@ type Package struct {
 
 func main() {
 	if len(os.Args) < 2 {
-		fmt.Println("No path provided")
+		fmt.Println("Nothing provided")
 		os.Exit(128)
 	}
 
-	pkg := LoadXML(os.Args[1])
-	url := GetURL(pkg)
+	var pack string
+
+	url, err := url.ParseRequestURI(os.Args[1])
+	if err == nil && url.Scheme == "twitch" {
+		paths := strings.Split(url.Path, "/")
+		pack = GetPackURL(paths[3], paths[5])
+	} else {
+		pkg := LoadXML(os.Args[1])
+		pack = GetPackURL(pkg.Project.ID, pkg.Project.File)
+	}
 
 	var args []string
 	switch runtime.GOOS {
 	case "darwin":
-		args = []string{"open", "-a", "MultiMC", "--args", "import", url}
+		args = []string{"open", "-a", "MultiMC", "--args", "import", pack}
 	case "freebsd", "linux", "netbsd", "openbsd":
-		args = []string{"multimc", "--import", url}
+		args = []string{"multimc", "--import", pack}
 	case "windows":
-		args = []string{"MultiMC.exe", "--import", url}
+		args = []string{"MultiMC.exe", "--import", pack}
 	}
 
 	LoadMultiMC(args)
@@ -59,9 +69,9 @@ func LoadXML(fileName string) Package {
 	return pkg
 }
 
-// GetURL - Request the download url from Twitch's API
-func GetURL(pkg Package) string {
-	url := "https://addons-ecs.forgesvc.net/api/v2/addon/" + pkg.Project.ID + "/file/" + pkg.Project.File + "/download-url"
+// GetPackURL - Request the download url from Twitch's API
+func GetPackURL(id string, file string) string {
+	url := "https://addons-ecs.forgesvc.net/api/v2/addon/" + id + "/file/" + file + "/download-url"
 	resp, err := http.Get(url)
 	if err != nil {
 		fmt.Println(err)
