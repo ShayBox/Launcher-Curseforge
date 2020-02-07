@@ -12,7 +12,7 @@ Instructions:
 
 Note: Having the Twitch app installed may break this.
 
-[Download](https://github.com/ShayBox/MultiMC-CCIP/releases)
+[Download](https://github.com/ShayBox/MultiMC-Twitch/releases)
 
 [CurseForge]: https://www.curseforge.com/
 [Twitch]: https://twitch.tv/
