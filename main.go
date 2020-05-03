@@ -71,8 +71,7 @@ func LoadXML(fileName string) Package {
 
 // GetPackURL - Request the download url from Twitch's API
 func GetPackURL(id string, file string) string {
-	url := "https://addons-ecs.forgesvc.net/api/v2/addon/" + id + "/file/" + file + "/download-url"
-	resp, err := http.Get(url)
+	resp, err := http.Get("https://addons-ecs.forgesvc.net/api/v2/addon/" + id + "/file/" + file + "/download-url")
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
@@ -86,7 +85,13 @@ func GetPackURL(id string, file string) string {
 		os.Exit(1)
 	}
 
-	return string(body)
+	url, err := url.Parse(string(body))
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	return url.String()
 }
 
 // LoadMultiMC - Execute MultiMC with --import (url)
