@@ -8,7 +8,7 @@ A simple Go program that handles Twitch's custom protocol and ccip files
 Instructions:
   - macOS - Move `MultiMC-Twitch.app` into `Applications`
   - Linux - [AUR] or Manually install files into system
-  - Windows - Move `MultiMC-Twitch.exe` into `MultiMC` folder and execute
+  - Windows - Move `MultiMC-Twitch.exe` into `MultiMC` folder and execute as admin once
 
 Note: Having the Twitch app installed may break this.
 
