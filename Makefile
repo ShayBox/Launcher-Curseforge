@@ -4,7 +4,6 @@ clean:
 	-rm -rf ./output
 	-rm ./build/darwin/MultiMC-Twitch.app/Contents/MacOS/MultiMC-Twitch
 	-rm ./build/linux/usr/bin/multimc-twitch
-	-rm ./build/windows/MultiMC-Twitch.exe
 
 darwin:
 	mkdir -p output
