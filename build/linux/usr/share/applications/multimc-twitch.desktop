@@ -1,6 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=MultiMC-Twitch
-Exec=multimc-twitch  %u
-Terminal=false
-MimeType=x-scheme-handler/twitch;

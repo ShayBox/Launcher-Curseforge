@@ -12,7 +12,7 @@ import (
 	"strings"
 )
 
-// Package - XML structure the Twitch CCIP files
+// Package - CCIP file structure
 type Package struct {
 	XMLName xml.Name `xml:"package"`
 	Project struct {
@@ -30,7 +30,7 @@ func main() {
 	var pack string
 
 	url, err := url.ParseRequestURI(os.Args[1])
-	if err == nil && url.Scheme == "twitch" {
+	if err == nil && url.Scheme == "curseforge" {
 		paths := strings.Split(url.Path, "/")
 		pack = GetPackURL(paths[3], paths[5])
 	} else {
@@ -69,7 +69,7 @@ func LoadXML(fileName string) Package {
 	return pkg
 }
 
-// GetPackURL - Request the download url from Twitch's API
+// GetPackURL - Request the download url from Curseforge's API
 func GetPackURL(id string, file string) string {
 	resp, err := http.Get("https://addons-ecs.forgesvc.net/api/v2/addon/" + id + "/file/" + file + "/download-url")
 	if err != nil {

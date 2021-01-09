@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=MultiMC-Curseforge
+Exec=multimc-curseforge  %u
+Terminal=false
+MimeType=x-scheme-handler/curseforge;

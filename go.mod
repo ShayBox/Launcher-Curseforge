@@ -1,4 +1,4 @@
-module github.com/shaybox/multimc-twitch
+module github.com/shaybox/multimc-curseforge
 
 go 1.14
 

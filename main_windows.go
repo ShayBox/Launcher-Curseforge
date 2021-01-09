@@ -34,14 +34,14 @@ func init() {
 }
 
 func UpdateRegistry() error {
-	key, _, err := registry.CreateKey(registry.CLASSES_ROOT, "twitch", registry.WRITE)
+	key, _, err := registry.CreateKey(registry.CLASSES_ROOT, "curseforge", registry.WRITE)
 	if err != nil {
 		return err
 	}
 
 	defer key.Close()
 
-	err = key.SetStringValue("", "URL: Twitch Handler")
+	err = key.SetStringValue("", "URL:  CurseForge Protocol")
 	if err != nil {
 		return err
 	}
