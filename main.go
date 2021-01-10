@@ -9,7 +9,6 @@ import (
 	"os"
 	"os/exec"
 	"runtime"
-	"strings"
 )
 
 // Package - CCIP file structure
@@ -31,8 +30,7 @@ func main() {
 
 	url, err := url.ParseRequestURI(os.Args[1])
 	if err == nil && url.Scheme == "curseforge" {
-		paths := strings.Split(url.Path, "/")
-		pack = GetPackURL(paths[3], paths[5])
+		pack = GetPackURL(url.Query().Get("addonId"), url.Query().Get("fileId"))
 	} else {
 		pkg := LoadXML(os.Args[1])
 		pack = GetPackURL(pkg.Project.ID, pkg.Project.File)
@@ -70,8 +68,8 @@ func LoadXML(fileName string) Package {
 }
 
 // GetPackURL - Request the download url from Curseforge's API
-func GetPackURL(id string, file string) string {
-	resp, err := http.Get("https://addons-ecs.forgesvc.net/api/v2/addon/" + id + "/file/" + file + "/download-url")
+func GetPackURL(addon string, file string) string {
+	resp, err := http.Get("https://addons-ecs.forgesvc.net/api/v2/addon/" + addon + "/file/" + file + "/download-url")
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
