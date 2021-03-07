@@ -4,6 +4,7 @@ A simple Go program that handles Curseforge's custom protocol and ccip files
 1. Reads the [CurseForge] `.ccip` file or `curseforge://` protocol  
 2. Requests the [CurseForge] to get the zip url  
 3. Launches [MultiMC] with the `--import` flag, with the url  
+4. Downloads the modpack icon into the icons folder
 
 Instructions:
   - macOS - Move `MultiMC-Curseforge.app` into `Applications`
