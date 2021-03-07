@@ -1,7 +1,7 @@
 GOCMD=go
 GOFLAGS=-o trace -gcflags "all=-trimpath=$GOPATH"
 
-all: clean darwin linux-386 linux-amd64 windows
+all: clean darwin linux windows
 
 clean:
 	-rm -rf ./output
@@ -13,15 +13,10 @@ darwin:
 	GOOS=darwin GOARCH=amd64 $(GOCMD) build $(GOFLAGS) -o ./build/darwin/MultiMC-Curseforge.app/Contents/MacOS/MultiMC-Curseforge
 	tar -czvf ./output/darwin.tar.gz --exclude .gitkeep -C ./build/darwin .
 
-linux-386:
+linux:
 	mkdir -p output
 	GOOS=linux GOARCH=386 $(GOCMD) build $(GOFLAGS) -o ./build/linux/usr/bin/multimc-curseforge
-	tar -czvf ./output/linux-386.tar.gz --exclude .gitkeep -C ./build/linux .
-
-linux-amd64:
-	mkdir -p output
-	GOOS=linux GOARCH=amd64 $(GOCMD) build $(GOFLAGS) -o ./build/linux/usr/bin/multimc-curseforge
-	tar -czvf ./output/linux-amd64.tar.gz --exclude .gitkeep -C ./build/linux .
+	tar -czvf ./output/linux.tar.gz --exclude .gitkeep -C ./build/linux .
 
 windows:
 	mkdir -p output

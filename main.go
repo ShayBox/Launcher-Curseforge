@@ -1,14 +1,18 @@
 package main
 
 import (
+	"encoding/json"
 	"encoding/xml"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"runtime"
+	"strings"
 )
 
 // Package - CCIP file structure
@@ -20,33 +24,88 @@ type Package struct {
 	} `xml:"project"`
 }
 
+// AddonInfo - AddonInfo info json structure
+type AddonInfo struct {
+	Name        string `json:"name"`
+	Attachments []struct {
+		IsDefault bool   `json:"isDefault"`
+		URL       string `json:"url"`
+	} `json:"attachments"`
+}
+
 func main() {
 	if len(os.Args) < 2 {
 		fmt.Println("Nothing provided")
 		os.Exit(128)
 	}
 
-	var pack string
+	input := strings.Join(os.Args[1:], " ")
 
-	url, err := url.ParseRequestURI(os.Args[1])
+	var addon string
+	var file string
+
+	url, err := url.ParseRequestURI(input)
 	if err == nil && url.Scheme == "curseforge" {
-		pack = GetPackURL(url.Query().Get("addonId"), url.Query().Get("fileId"))
+		addon = url.Query().Get("addonId")
+		file = url.Query().Get("fileId")
 	} else {
-		pkg := LoadXML(os.Args[1])
-		pack = GetPackURL(pkg.Project.ID, pkg.Project.File)
+		pkg := LoadXML(input)
+		addon = pkg.Project.ID
+		file = pkg.Project.File
 	}
 
+	pack, err := GetPackURL(addon, file)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	addonInfo, err := GetAddonInfo(addon)
+	if err != nil {
+		fmt.Println(err)
+		fmt.Println("Error occured getting addon info, proceeding")
+	}
+
+	var path string
 	var args []string
 	switch runtime.GOOS {
 	case "darwin":
-		args = []string{"open", "-a", "MultiMC", "--args", "import", pack}
+		path = "/Applications/MultiMC.app/Contents/MacOS/icons/" + addonInfo.Name
+		args = []string{"open", "-a", "MultiMC", "--args", "--import", pack}
 	case "freebsd", "linux", "netbsd", "openbsd":
+		home, err := os.UserHomeDir()
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		path = home + "/.local/share/multimc/icons/" + addonInfo.Name
 		args = []string{"multimc", "--import", pack}
 	case "windows":
+		executable, err := os.Executable()
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		multimc := filepath.Dir(executable)
+		path = multimc + "\\icons\\" + addonInfo.Name
 		args = []string{"MultiMC.exe", "--import", pack}
 	}
 
-	LoadMultiMC(args)
+	var attachmentURL string
+	for _, attachment := range addonInfo.Attachments {
+		if attachment.IsDefault {
+			attachmentURL = attachment.URL
+			break
+		}
+	}
+
+	err = DownloadFile(path, attachmentURL)
+	if err != nil {
+		fmt.Println(err)
+		fmt.Println("Error occured downloaading icon, proceeding")
+	}
+
+	RunCMD(args)
 }
 
 // LoadXML - Load XML from disk into variable
@@ -67,33 +126,76 @@ func LoadXML(fileName string) Package {
 	return pkg
 }
 
-// GetPackURL - Request the download url from Curseforge's API
-func GetPackURL(addon string, file string) string {
+// GetPackURL - Request the pack url from Curseforge's API
+func GetPackURL(addon string, file string) (string, error) {
 	resp, err := http.Get("https://addons-ecs.forgesvc.net/api/v2/addon/" + addon + "/file/" + file + "/download-url")
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		return "", err
 	}
 
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		return "", err
 	}
 
 	url, err := url.Parse(string(body))
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		return "", err
 	}
 
-	return url.String()
+	return url.String(), nil
 }
 
-// LoadMultiMC - Execute MultiMC with --import (url)
-func LoadMultiMC(args []string) {
+// GetAddonInfo - Get addon info
+func GetAddonInfo(addon string) (AddonInfo, error) {
+	resp, err := http.Get("https://addons-ecs.forgesvc.net/api/v2/addon/" + addon)
+	if err != nil {
+		return AddonInfo{}, err
+	}
+
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return AddonInfo{}, err
+	}
+
+	var addonInfo AddonInfo
+	err = json.Unmarshal(body, &addonInfo)
+	if err != nil {
+		return AddonInfo{}, err
+	}
+
+	return addonInfo, nil
+}
+
+// DownloadFile will download a url to a local file. It's efficient because it will
+// write as it downloads and not load the whole file into memory.
+func DownloadFile(filepath string, url string) error {
+
+	// Get the data
+	resp, err := http.Get(url)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	// Create the file
+	out, err := os.Create(filepath)
+	if err != nil {
+		return err
+	}
+	defer out.Close()
+
+	// Write the body to file
+	_, err = io.Copy(out, resp.Body)
+	return err
+}
+
+// RunCMD - Execute CMD with args
+func RunCMD(args []string) {
 	cmd := exec.Command(args[0], args[1:]...)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr

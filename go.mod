@@ -2,4 +2,4 @@ module github.com/shaybox/multimc-curseforge
 
 go 1.14
 
-require golang.org/x/sys v0.0.0-20200501145240-bc7a7d42d5c3
+require golang.org/x/sys v0.0.0-20210305230114-8fe3ee5dd75b

@@ -1,4 +1,4 @@
-build/darwin/MultiMC-Twitch.app/Contents/MacOS/MultiMC-Twitch
-build/linux/usr/bin/multimc-twitch
-build/windows/MultiMC-Twitch.exe
+build/darwin/MultiMC-Curseforge.app/Contents/MacOS/MultiMC-Curseforge
+build/linux/usr/bin/multimc-curseforge
+build/windows/MultiMC-Curseforge.exe
 output/
