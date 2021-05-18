@@ -79,7 +79,13 @@ func main() {
 		}
 
 		path = home + "/.local/share/multimc/icons/" + addonInfo.Name
-		args = []string{"multimc", "--import", pack}
+		// Workaround for hacky MultiMC.deb package wrapper
+		deb := "/opt/multimc/run.sh"
+		if FileExists(deb) {
+			args = []string{deb, "--import", pack}
+		} else {
+			args = []string{"multimc", "--import", pack}
+		}
 	case "windows":
 		executable, err := os.Executable()
 		if err != nil {
@@ -206,4 +212,14 @@ func RunCMD(args []string) {
 	}
 
 	cmd.Wait()
+}
+
+// FileExists checks if a file exists and is not a directory before we
+// try using it to prevent further errors.
+func FileExists(filename string) bool {
+	info, err := os.Stat(filename)
+	if os.IsNotExist(err) {
+		return false
+	}
+	return !info.IsDir()
 }
