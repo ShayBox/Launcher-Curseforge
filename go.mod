@@ -1,5 +1,5 @@
 module github.com/shaybox/multimc-curseforge
 
-go 1.16
+go 1.17
 
-require golang.org/x/sys v0.0.0-20210309074719-68d13333faf2
+require golang.org/x/sys v0.0.0-20210903071746-97244b99971b
