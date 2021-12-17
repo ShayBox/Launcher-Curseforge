@@ -9,7 +9,7 @@ A simple Go program that handles Curseforge's custom protocol and ccip files
 Instructions:
   - macOS - Move `MultiMC-Curseforge.app` into `Applications`
   - Linux - [AUR] or Manually install files into system
-  - Windows - Move `MultiMC-Curseforge.exe` into `MultiMC` folder and execute
+  - Windows - Move `MultiMC-Curseforge.exe` into `MultiMC` folder and execute as admin
 
 Note: Having the Curse app installed may break this.
 
