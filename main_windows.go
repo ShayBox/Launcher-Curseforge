@@ -63,7 +63,7 @@ func UpdateRegistry() error {
 		return err
 	}
 
-	err = iconKey.SetStringValue("", dir+"\\MultiMC.exe")
+	err = iconKey.SetStringValue("", dir+"\\PolyMC.exe")
 	if err != nil {
 		return err
 	}

@@ -70,21 +70,21 @@ func main() {
 	var args []string
 	switch runtime.GOOS {
 	case "darwin":
-		path = "/Applications/MultiMC.app/Contents/MacOS/icons/" + addonInfo.Name
-		args = []string{"open", "-a", "MultiMC", "--args", "--import", pack}
+		path = "/Applications/PolyMC.app/Contents/MacOS/icons/" + addonInfo.Name
+		args = []string{"open", "-a", "PolyMC", "--args", "--import", pack}
 	case "freebsd", "linux", "netbsd", "openbsd":
 		home, err := os.UserHomeDir()
 		if err != nil {
 			fmt.Println(err)
 		}
 
-		path = home + "/.local/share/multimc/icons/" + addonInfo.Name
-		// Workaround for hacky MultiMC.deb package wrapper
-		deb := "/opt/multimc/run.sh"
+		path = home + "/.local/share/polymc/icons/" + addonInfo.Name
+		// Workaround for hacky PolyMC.deb package wrapper
+		deb := "/opt/polymc/run.sh"
 		if FileExists(deb) {
 			args = []string{deb, "--import", pack}
 		} else {
-			args = []string{"multimc", "--import", pack}
+			args = []string{"polymc", "--import", pack}
 		}
 	case "windows":
 		executable, err := os.Executable()
@@ -92,9 +92,9 @@ func main() {
 			fmt.Println(err)
 		}
 
-		multimc := filepath.Dir(executable)
-		path = multimc + "\\icons\\" + addonInfo.Name
-		args = []string{"MultiMC.exe", "--import", pack}
+		polymc := filepath.Dir(executable)
+		path = polymc + "\\icons\\" + addonInfo.Name
+		args = []string{"PolyMC.exe", "--import", pack}
 	}
 
 	var attachmentURL string

@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>CFBundleExecutable</key>
-    <string>MultiMC-Curseforge</string>
+    <string>PolyMC-Curseforge</string>
     <key>CFBundleIdentifier</key>
-    <string>com.shaybox.multimc-curseforge</string>
+    <string>com.shaybox.polymc-curseforge</string>
     <key>NSUIElement</key>
     <true/>
     <key>CFBundleURLTypes</key>
