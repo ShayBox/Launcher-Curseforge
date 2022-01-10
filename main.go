@@ -66,35 +66,29 @@ func main() {
 		fmt.Println("Error occured getting addon info, proceeding")
 	}
 
-	var path string
-	var args []string
+	var iconPath string
+	var execArgs []string
 	switch runtime.GOOS {
 	case "darwin":
-		path = "/Applications/PolyMC.app/Contents/MacOS/icons/" + addonInfo.Name
-		args = []string{"open", "-a", "PolyMC", "--args", "--import", pack}
+		execArgs = []string{"open", "-a", "PolyMC", "--args", "--import", pack}
+		iconPath = "/Applications/PolyMC.app/Contents/MacOS/icons/" + addonInfo.Name
 	case "freebsd", "linux", "netbsd", "openbsd":
 		home, err := os.UserHomeDir()
 		if err != nil {
 			fmt.Println(err)
 		}
 
-		path = home + "/.local/share/polymc/icons/" + addonInfo.Name
-		// Workaround for hacky PolyMC.deb package wrapper
-		deb := "/opt/polymc/run.sh"
-		if FileExists(deb) {
-			args = []string{deb, "--import", pack}
-		} else {
-			args = []string{"polymc", "--import", pack}
-		}
+		execArgs = []string{"polymc", "--import", pack}
+		iconPath = home + "/.local/share/polymc/icons/" + addonInfo.Name
 	case "windows":
 		executable, err := os.Executable()
 		if err != nil {
 			fmt.Println(err)
 		}
 
-		polymc := filepath.Dir(executable)
-		path = polymc + "\\icons\\" + addonInfo.Name
-		args = []string{"PolyMC.exe", "--import", pack}
+		execPath := filepath.Dir(executable)
+		execArgs = []string{"PolyMC.exe", "--import", pack}
+		iconPath = execPath + "\\icons\\" + addonInfo.Name
 	}
 
 	var attachmentURL string
@@ -105,13 +99,13 @@ func main() {
 		}
 	}
 
-	err = DownloadFile(path, attachmentURL)
+	err = DownloadFile(iconPath, attachmentURL)
 	if err != nil {
 		fmt.Println(err)
 		fmt.Println("Error occured downloaading icon, proceeding")
 	}
 
-	RunCMD(args)
+	RunCMD(execArgs)
 }
 
 // LoadXML - Load XML from disk into variable
