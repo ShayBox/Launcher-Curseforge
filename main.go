@@ -80,6 +80,11 @@ func main() {
 
 		execArgs = []string{"polymc", "--import", pack}
 		iconPath = home + "/.local/share/polymc/icons/" + addonInfo.Name
+
+		err = exec.Command("flatpak", "info", "org.polymc.PolyMC").Run()
+		if err == nil {
+			execArgs = []string{"flatpak", "run", "org.polymc.PolyMC", "--import", pack}
+		}
 	case "windows":
 		executable, err := os.Executable()
 		if err != nil {
