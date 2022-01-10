@@ -4,4 +4,4 @@ Name=PolyMC-Curseforge
 Exec=polymc-curseforge %u
 Terminal=false
 MimeType=x-scheme-handler/curseforge;
-OnlyShowIn=
+OnlyShowIn=KDE
