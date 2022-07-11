@@ -1,5 +1,8 @@
 # PolyMC-Curseforge
 
+Notice: This no longer works, Curseforge has shut down their internal API in favour of a new one.  
+Their new API doesn't currently have all required endpoints, and requires authentication with approval to get access.
+
 A simple Go program that handles Curseforge's custom protocol and ccip files
 1. Reads the [CurseForge] `.ccip` file or `curseforge://` protocol  
 2. Requests the [CurseForge] to get the zip url  
