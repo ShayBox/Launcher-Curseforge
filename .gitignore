@@ -1,4 +1,1 @@
-build/darwin/PolyMC-Curseforge.app/Contents/MacOS/PolyMC-Curseforge
-build/linux/usr/bin/polymc-curseforge
-build/windows/PolyMC-Curseforge.exe
-output/
+/target

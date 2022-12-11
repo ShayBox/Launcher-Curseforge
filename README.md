@@ -1,26 +1,44 @@
-# PolyMC-Curseforge
+<div align="center">
+  <a href="https://discord.shaybox.com">
+    <img alt="Discord" src="https://img.shields.io/discord/824865729445888041?color=404eed&label=Discord&logo=Discord&logoColor=FFFFFF">
+  </a>
+  <a href="https://github.com/shaybox/launcher-curseforge/releases/latest">
+    <img alt="Downloads" src="https://img.shields.io/github/downloads/shaybox/launcher-curseforge/total?color=3fb950&label=Downloads&logo=github&logoColor=FFFFFF">
+  </a>
+</div>
 
-Notice: This no longer works, Curseforge has shut down their internal API in favour of a new one.  
-Their new API doesn't currently have all required endpoints, and requires authentication with approval to get access.
+# Launcher-Curseforge
 
-A simple Go program that handles Curseforge's custom protocol and ccip files
-1. Reads the [CurseForge] `.ccip` file or `curseforge://` protocol  
-2. Requests the [CurseForge] to get the zip url  
-3. Launches [PolyMC] with the `--import` flag, with the url  
-4. Downloads the modpack icon into the icons folder
+Integrates the [Curseforge] [Minecraft] Modpack installation button to any [MultiMC] based [Minecraft] launcher.  
+Handles the `curseforge://` custom protocol and executes the launcher with the `--import` argument.
 
-Instructions:
-  - macOS - Move `PolyMC-Curseforge.app` into `Applications`
-  - Linux - [AUR] or Manually install files into system
-  - Windows - Move `PolyMC-Curseforge.exe` into `PolyMC` folder and execute
+## Installation:
 
-Note: Having the Curse app installed may break this.
+### Windows:
+- [Download] and Extract the latest release
+- Move the `.exe` into the same directory as the launcher
+- Run as **Administrator** once to update registry values
 
-[Download](https://github.com/ShayBox/PolyMC-Curseforge/releases)
+### macOS:
+- [Download] the latest release
+- Move the `.app` into the `Applications` directory
 
-I do not support MultiMC and its developers anymore  
-If you would like to know more, check out [PolyMC]
+### Linux:
 
-[CurseForge]: https://www.curseforge.com/
-[PolyMC]: https://polymc.org/
-[AUR]: https://aur.archlinux.org/packages/Polymc-curseforge/
+#### Archlinux: [AUR]
+
+#### Debian/Ubuntu:
+- [Download] and Extract the latest release
+- Run `sudo dpkg -i launcher-curseforge_X.X.X_amd64.deb`
+
+#### Other:
+- [Download] and Extract the latest release
+- Extract the `.deb` package and the `data.tar.gz` inside
+- Manually move the files to `~/.local`
+- Run `xdg-mime default launcher-curseforge.desktop x-scheme-handler/curseforge`
+
+[Curseforge]: https://curseforge.com
+[Minecraft]: https://minecraft.net
+[MultiMC]: https://multimc.org
+[Download]: https://github.com/ShayBox/Launcher-Curseforge/releases/latest
+[AUR]: https://aur.archlinux.org/packages/launcher-curseforge-bin
