@@ -47,7 +47,7 @@ jobs:
       - name: Bundle Release (Other)
         if: ${{ matrix.runner != 'windows-latest' }}
         run: |
-          cargo install --git https://github.com/burtonageo/cargo-bundle.git
+          cargo install --git https://github.com/burtonageo/cargo-bundle.git --rev 1f4b526
           cargo bundle --release --target ${{ matrix.target }}
 
       - name: Create Zip Archive (Windows)

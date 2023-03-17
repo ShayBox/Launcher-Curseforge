@@ -1,6 +1,6 @@
 [package]
 name = "launcher-curseforge"
-version = "2.0.0"
+version = "2.1.0"
 authors = ["Shayne Hartford <shaybox@shaybox.com>"]
 edition = "2021"
 description = "Integrates the Curseforge Modpack installation button to any MultiMC based launcher"
@@ -11,21 +11,22 @@ license = "MIT"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-anyhow = "1.0.66"
-furse = "1.5.7"
-tokio = { version = "1.23.0", features = ["rt-multi-thread", "macros"] }
-url = "2.2.2"
+anyhow = "1.0.69"
+furse = "1.5.8"
+rayon = "1.7.0"
+tokio = { version = "1.26.0", features = ["rt-multi-thread", "macros"] }
+url = "2.3.1"
 
 [target.'cfg(windows)'.dependencies]
 is_elevated = "0.1.2"
-winreg = "0.10.1"
+winreg = "0.11.0"
 
+# https://github.com/johnthagen/min-sized-rust
 [profile.release]
-strip = true
-opt-level = "z"
+strip = true      # Automatically strip symbols from the binary.
+opt-level = "z"   # Optimize for size.
 lto = true
 codegen-units = 1
-panic = "abort"
 
 [package.metadata.bundle]
 identifier = "com.shaybox.launcher-curseforge"

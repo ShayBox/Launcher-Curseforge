@@ -1,11 +1,12 @@
-use anyhow::{bail, Result};
-use furse::{structures::ID, Furse};
 use std::{
     collections::HashMap,
     env,
     io::{self, ErrorKind},
     process::{Command, Output},
 };
+
+use anyhow::{bail, Result};
+use furse::{structures::ID, Furse};
 use url::Url;
 
 const CURSEFORGE_API_KEY: &str = env!("CURSEFORGE_API_KEY");
@@ -65,10 +66,11 @@ async fn main() -> Result<()> {
     bail!("Failed to find launcher")
 }
 
-#[cfg(windows)]
+#[cfg(target_os = "windows")]
 fn try_update_registry() -> Result<()> {
-    use is_elevated::is_elevated;
     use std::path::Path;
+
+    use is_elevated::is_elevated;
     use winreg::{enums::HKEY_CLASSES_ROOT, RegKey};
 
     if is_elevated() {
