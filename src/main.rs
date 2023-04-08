@@ -46,8 +46,13 @@ async fn main() -> Result<()> {
     launchers.insert(0, "/opt/multimc/run.sh");
 
     #[cfg(target_os = "linux")]
-    if try_flatpaks(download_url.as_ref())? {
-        return Ok(());
+    match try_flatpaks(download_url.as_ref()) {
+        Ok(true) => return Ok(()),
+        Ok(false) => {}
+        Err(e) => {
+            // NotFound indicates flatpak is not installed
+            if ErrorKind::NotFound != e.kind() {bail!(e)}
+        }
     };
 
     for launcher in launchers {
@@ -94,7 +99,7 @@ fn try_update_registry() -> Result<()> {
 }
 
 #[cfg(target_os = "linux")]
-fn try_flatpaks(download_url: &str) -> Result<bool, anyhow::Error> {
+fn try_flatpaks(download_url: &str) -> Result<bool, io::Error> {
     let packages = vec!["org.polymc.PolyMC", "org.prismlauncher.PrismLauncher"];
     for package in packages {
         let output = Command::new("flatpak")
