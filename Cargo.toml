@@ -1,6 +1,6 @@
 [package]
 name = "launcher-curseforge"
-version = "2.1.0"
+version = "2.1.1"
 authors = ["Shayne Hartford <shaybox@shaybox.com>"]
 edition = "2021"
 description = "Integrates the Curseforge Modpack installation button to any MultiMC based launcher"
