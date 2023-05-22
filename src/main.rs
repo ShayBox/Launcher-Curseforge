@@ -89,7 +89,7 @@ fn try_update_registry() -> Result<()> {
         root_key.set_value("URL Protocol", &"")?;
 
         let sub_path = root_path.join("shell\\open\\command");
-        let (sub_key, _) = hkcr.create_subkey(&sub_path)?;
+        let (sub_key, _) = hkcr.create_subkey(sub_path)?;
         sub_key.set_value("", &value)?;
 
         println!("Registry Updated");
