@@ -12,6 +12,11 @@
 Integrates the [Curseforge] [Minecraft] Modpack installation button to any [MultiMC] based [Minecraft] launcher.  
 Handles the `curseforge://` custom protocol and executes the launcher with the `--import` argument.
 
+## Supported Launchers:
+- [PrismLauncher] [^1]
+- [PolyMC]
+- [MultiMC]
+
 ## Installation:
 
 ### Windows:
@@ -36,6 +41,12 @@ Handles the `curseforge://` custom protocol and executes the launcher with the `
 - Extract the `.deb` package and the `data.tar.gz` inside
 - Manually move the files to `~/.local`
 - Run `xdg-mime default launcher-curseforge.desktop x-scheme-handler/curseforge`
+
+[^1]: The last supported version of PrismLauncher is version 6, version 7 broke the `--import` flag, and version 8 integrated Launcher-Curseforge functionality
+
+[PrismLauncher]: https://prismlauncher.org
+[PolyMC]: https://polymc.org
+[MultiMC]: https://multimc.org
 
 [Curseforge]: https://curseforge.com
 [Minecraft]: https://minecraft.net
