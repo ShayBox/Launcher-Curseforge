@@ -1,3 +1,6 @@
+// Prevents additional console window on Windows in release, DO NOT REMOVE!!
+#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
+
 use std::{
     collections::HashMap,
     env,
@@ -51,7 +54,9 @@ async fn main() -> Result<()> {
         Ok(false) => {}
         Err(e) => {
             // NotFound indicates flatpak is not installed
-            if ErrorKind::NotFound != e.kind() {bail!(e)}
+            if ErrorKind::NotFound != e.kind() {
+                bail!(e)
+            }
         }
     };
 

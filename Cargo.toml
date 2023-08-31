@@ -1,6 +1,6 @@
 [package]
 name = "launcher-curseforge"
-version = "2.1.1"
+version = "2.1.2"
 authors = ["Shayne Hartford <shaybox@shaybox.com>"]
 edition = "2021"
 description = "Integrates the Curseforge Modpack installation button to any MultiMC based launcher"
@@ -11,15 +11,15 @@ license = "MIT"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-anyhow = "1.0"
-furse = "1.5"
-rayon = "1.7"
-tokio = { version = "1.28", features = ["rt-multi-thread", "macros"] }
-url = "2.3"
+anyhow = "1"
+furse = "1"
+rayon = "1"
+tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
+url = "2"
 
 [target.'cfg(windows)'.dependencies]
 is_elevated = "0.1"
-winreg = "0.50"
+winreg = "0.51"
 
 # https://github.com/johnthagen/min-sized-rust
 [profile.release]
